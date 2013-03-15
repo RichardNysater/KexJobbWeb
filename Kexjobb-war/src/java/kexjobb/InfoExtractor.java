@@ -3,6 +3,10 @@ package kexjobb;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Contains the id of the songs used.
+ * @author Shaan
+ */
 public class InfoExtractor {
     ArrayList<int[]> songs;
     InfoExtractor() throws Exception{
@@ -18,7 +22,7 @@ public class InfoExtractor {
         allsongs[8] = 8470520;          //Timo Räisänen - About You Now
         allsongs[9] = 8;                //Whitesnake - Here I Go Again
         
-        songs = new ArrayList<int[]>();
+        songs = new ArrayList<>();
         for(int i = 0; i<allsongs.length;i++){
             for(int j = i; j<allsongs.length;j++){
                 if(j != i){

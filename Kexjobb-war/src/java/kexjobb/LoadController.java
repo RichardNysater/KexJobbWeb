@@ -7,6 +7,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 
+/**
+ * Handles the sessions.
+ * @author Shaan
+ */
+
 @WebServlet(name = "LoadController", urlPatterns = {"/LoadController"})
 public class LoadController extends HttpServlet{
     

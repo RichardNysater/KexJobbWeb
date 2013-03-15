@@ -62,7 +62,7 @@
                 $(document).keydown(function(e) {
                     var unicode = e.charCode ? e.charCode : e.keyCode;
                     // right arrow
-                    if (unicode == 32) {
+                    if (unicode === 32) {
                         audio.playPause();
                     }
                 });

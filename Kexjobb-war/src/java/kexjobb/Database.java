@@ -14,7 +14,8 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
- * Url, user and password to database are stored separately a file called Databasedetails. 
+ * Handles queries to the mysql database.
+ * Url to the database, user and password to database are stored separately a file called Databasedetails.
  * @author Shaan
  */
 public class Database {
@@ -49,12 +50,9 @@ public class Database {
         }
         query = "INSERT INTO reviews (Id, Songone, Songtwo, Time, Rating) VALUES (?,?,?,?,?)";
         
-        Connection con = null;
-        PreparedStatement pst = null;
-        
         try {
-            con = (Connection) DriverManager.getConnection(url, user, password);
-            pst = (PreparedStatement) con.prepareStatement(query);
+            Connection con = (Connection) DriverManager.getConnection(url, user, password);
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(query);
             pst.setString(1, id);
             pst.setString(2, songOne);
             pst.setString(3, songTwo);
@@ -69,7 +67,9 @@ public class Database {
             pst.close();
             con.close();
             
-        } catch (SQLException ex) {ex.printStackTrace();}
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         System.out.println("Finish'd addRating()");
     }

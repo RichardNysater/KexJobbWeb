@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Gets called when a user submits a rating. Instantiates a Database and adds the rating of the songs to it.
  * @author Shaan
  */
 public class Submitted extends HttpServlet {
