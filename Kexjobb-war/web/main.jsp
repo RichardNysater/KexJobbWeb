@@ -40,7 +40,7 @@
                 
                 
                
-                ids = ['vol-0', 'vol-25', 'vol-50', 'vol-75', 'vol-100'];
+                ids = ['vol-0','vol-10', 'vol-20', 'vol-30', 'vol-40', 'vol-50', 'vol-60', 'vol-70', 'vol-80', 'vol-90', 'vol-100'];
                 for (var i = 0, ii = ids.length; i < ii; i++) {
                     var elem = document.getElementById(ids[i]),
                     volume = ids[i].split('-')[1];
@@ -81,34 +81,38 @@
     </head>
     
     <body onLoad='setTimeout("showIt()", 4000);'>
-        <div class="wrapper">
-            <h1>Compare the songs! (Not on Firefox)</h1>
-            <audio preload></audio>
-            <ol>
-                <li><a href="#" data-src="<%= session.getAttribute("songOneUrl") %>"><%= session.getAttribute("songOne") %></a></li>
-                <li><a href="#" data-src="<%= session.getAttribute("songTwoUrl") %>"><%= session.getAttribute("songTwo") %></a></li>
-            </ol>
-            <p>Volume: <a href="#" id="vol-0">0%</a> | <a href="#" id="vol-25">25%</a> | <a href="#" id="vol-50">50%</a> | <a href="#" id="vol-75">75%</a> | <a href="#" id="vol-100">100%</a></p>
-        </div>
-        <div id="vote" align="center" style="display:none;">
-            <form id="similarity" action="Submitted" >
-                <input type="hidden" name="action" value="rate">
+        <h1 id="main">Compare the songs!</h1>
+        <h2 id="firefox">Currently not compatible with Firefox</h1>
+        <div id ="maincont">
+            <div class="wrapper">
+                <p id="volume">Volume: <a href="#" id="vol-0">0%</a> | <a href="#" id="vol-10">10%</a> | <a href="#" id="vol-20">20%</a> | <a href="#" id="vol-30">30%</a> | <a href="#" id="vol-40">40%</a> | <a href="#" id="vol-50">50%</a> | <a href="#" id="vol-60">60%</a> | <a href="#" id="vol-70">70%</a> | <a href="#" id="vol-80">80%</a> | <a href="#" id="vol-90">90%</a> | <a href="#" id="vol-100">100%</a></p>
+                <audio preload></audio>
+                <ol>
+                    <li><a href="#" data-src="<%= session.getAttribute("songOneUrl") %>"><%= session.getAttribute("songOne") %></a></li>
+                    <li><a href="#" data-src="<%= session.getAttribute("songTwoUrl") %>"><%= session.getAttribute("songTwo") %></a></li>
+                </ol>
                 
-                <p>How similar are these two songs? (0 - 100)</p>
-                <table>
-                    <tr>
-                        <td>
-                            <span id="range">50</span>
-                        </td>
-                        <td id="rangeslider">
-                            <input id="slider" type="range" min="0" max="100" step="1" value="50" name="rating" onchange="showValue(this.value);"/>
-                        </td>
-                    </tr>
+            </div>
+            <div id="vote" align="center" style="display:none;">
+                <form id="similarity" action="Submitted" >
+                    <input type="hidden" name="action" value="rate">
                     
-                </table>
-                <br>
-                <input type="image" src="img/submit.gif" alt="Submit">
-            </form>
+                    <p>How similar are these two songs? (0 - 100)</p>
+                    <table>
+                        <tr>
+                            <td>
+                                <span id="range">50</span>
+                            </td>
+                            <td id="rangeslider">
+                                <input id="slider" type="range" min="0" max="100" step="1" value="50" name="rating" onchange="showValue(this.value);"/>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    <br>
+                    <input type="image" src="img/submit.gif" alt="Submit">
+                </form>
+            </div>
         </div>
         <div id="shortcuts">
             <div>
@@ -116,5 +120,5 @@
                 <p><em>Space</em> Play/pause</p>
             </div>
         </div>
-    </body>
+</body>
 </html>

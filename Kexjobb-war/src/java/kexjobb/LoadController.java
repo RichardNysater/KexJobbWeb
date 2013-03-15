@@ -60,6 +60,13 @@ public class LoadController extends HttpServlet{
                 sess.setAttribute("songTwoUrl", songTwoUrl);
                 sess.setAttribute("extractor", extractor);
             }
+            else if(request.getParameter("action").equals("debug")){
+                sess.setAttribute("songOne", "");
+                sess.setAttribute("songTwo", "");
+                sess.setAttribute("songOneUrl", "");
+                sess.setAttribute("songTwoUrl", "");
+                sess.setAttribute("extractor", "");
+            }
             else{
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }

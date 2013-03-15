@@ -1,14 +1,35 @@
-body { color: #666; font-family: sans-serif; line-height: 1.4; }
-h1 { color: #444; font-size: 1.2em; padding: 14px 2px 12px; margin: 0px; }
+body { color: #666; font-family: sans-serif; line-height: 1.4; background: #f3f3f3;  background: rgba(240, 240, 240, 0.7);}
+
 h1 em { font-style: normal; color: #999; }
 a { color: #888; text-decoration: none; }
-.wrapper { width: 400px; margin: 40px auto; }
+.wrapper { width: 500px; margin: 40px auto;}
 #vote { 
     width: 500px;
     margin: 40px auto;
     
 }
 
+h1#main {	
+        text-shadow: 0px 1px 1px #4d4d4d;
+        color: #222;
+        font: 65px 'LeagueGothicRegular';
+}	
+h2#firefox {	
+        text-shadow: 0px 1px 1px #4d4d4d;
+        color: #222;
+        text-align: center;
+        font: 20px 'LeagueGothicRegular';
+}	
+h1 { 
+	line-height: 1.2em;
+	margin: 0 1em;
+	padding: 0;
+	text-transform: uppercase;
+	text-align: center;
+}
+#volume{
+    font-size: 14px;
+}
 table{
     width: 40%;
     text-align: center;
