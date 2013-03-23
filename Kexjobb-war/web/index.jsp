@@ -5,7 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Forwarding..</title>
 	</head>
-	<body onLoad="location.href='LoadController?action=start';">
+	<body onLoad="location.href='LoadController';">
 		<h1>&nbsp;</h1>
 	</body>
 </html>

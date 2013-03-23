@@ -8,71 +8,74 @@ import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 
 /**
- * Handles the sessions.
+ * The main controller for the website. Communicates with the InfoExtractor and Database to make sure users complete the example rating  
+ * before proceeding to the real rating and adds the songs to be played to the user's session.
  * @author Shaan
  */
-
 @WebServlet(name = "LoadController", urlPatterns = {"/LoadController"})
 public class LoadController extends HttpServlet{
-    
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        
-        HttpSession sess = request.getSession(true);
-        
-        //		if (sess != null) {
-        //			sess.invalidate();
-        //		}
-        //
-        //		sess = request.getSession(true);
-        
-        
-        try {
-            if(request.getParameter("action").equals("start")){
-                request.setCharacterEncoding("UTF-8");
-                InfoExtractor extractor = new InfoExtractor();
-                String[] songs = extractor.getSong();
-                String songOne = songs[0];
-                String songTwo = songs[1];
-                String songOneUrl = extractor.getUrl(songOne);
-                String songTwoUrl = extractor.getUrl(songTwo);
-                
-                sess.setAttribute("songOne", songOne);
-                sess.setAttribute("songTwo", songTwo);
-                sess.setAttribute("songOneUrl", songOneUrl);
-                sess.setAttribute("songTwoUrl", songTwoUrl);
-                sess.setAttribute("extractor", extractor);
-            }
-            else if(request.getParameter("action").equals("continue")){
-                InfoExtractor extractor = (InfoExtractor)sess.getAttribute("extractor");
-                if(extractor == null){
-                    extractor = new InfoExtractor();
-                }
-                String[] songs = extractor.getSong();
-                String songOne = songs[0];
-                String songTwo = songs[1];
-                String songOneUrl = extractor.getUrl(songOne);
-                String songTwoUrl = extractor.getUrl(songTwo);
-                
-                sess.setAttribute("songOne", songOne);
-                sess.setAttribute("songTwo", songTwo);
-                sess.setAttribute("songOneUrl", songOneUrl);
-                sess.setAttribute("songTwoUrl", songTwoUrl);
-                sess.setAttribute("extractor", extractor);
-            }
-            else if(request.getParameter("action").equals("debug")){
-                sess.setAttribute("songOne", "");
-                sess.setAttribute("songTwo", "");
-                sess.setAttribute("songOneUrl", "");
-                sess.setAttribute("songTwoUrl", "");
-                sess.setAttribute("extractor", "");
-            }
-            else{
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(LoadController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        request.getRequestDispatcher("main.jsp").forward(request, response);
-    }
+	
+	/**
+	 * doGet is called every time a user is redirected to the LoadController.
+	 * @param request 
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException 
+	 */
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String nextLocation = "main.jsp";
+		HttpSession sess = request.getSession(true);
+		String[] songs;
+		try {
+			InfoExtractor extractor = (InfoExtractor)sess.getAttribute("extractor");
+			if(extractor == null){
+				extractor = new InfoExtractor(request.getRemoteAddr());
+			}
+			Database db = new Database();
+			if(db.hasCompletedExample(request.getRemoteAddr())){
+				songs = extractor.getSong();
+			}
+			else{
+				songs = extractor.getDemoSong();
+				String rating = songs[2];
+				sess.setAttribute("rating",rating);
+				nextLocation = "example.jsp";
+			}
+			String songOne = songs[0];
+			String songTwo = songs[1];
+			if(songOne == null && songTwo == null){
+				nextLocation = "finished.jsp";
+			}
+			else{
+				setAttributes(songOne, songTwo, extractor, request, sess);
+			}
+		} catch (Exception ex) {
+			Logger.getLogger(LoadController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		request.getRequestDispatcher(nextLocation).forward(request, response);
+	}
+	
+	/**
+	 * Sets the attributes for the current session
+	 * @param songOne First song to be played
+	 * @param songTwo Second song to be played
+	 * @param extractor The InfoExtractor for this session
+	 * @param request The HttpServlet
+	 * @param sess  The current session
+	 */
+	private void setAttributes(String songOne, String songTwo, InfoExtractor extractor, HttpServletRequest request, HttpSession sess){
+		sess.setAttribute("songOne", songOne);
+		sess.setAttribute("songTwo", songTwo);
+		System.out.println(request.getHeader("user-agent"));
+		if(request.getHeader("user-agent").contains("Firefox")){
+			sess.setAttribute("songOneUrl", extractor.getUrlFirefox(songOne));
+			sess.setAttribute("songTwoUrl", extractor.getUrlFirefox(songTwo));
+		}
+		else{
+			sess.setAttribute("songOneUrl", extractor.getUrl(songOne));
+			sess.setAttribute("songTwoUrl", extractor.getUrl(songTwo));
+		}
+		sess.setAttribute("extractor", extractor);
+	}
 }
