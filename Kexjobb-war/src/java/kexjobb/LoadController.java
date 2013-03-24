@@ -8,23 +8,23 @@ import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 
 /**
- * The main controller for the website. Communicates with the InfoExtractor and Database to make sure users complete the example rating  
+ * The main controller for the website. Communicates with the InfoExtractor and Database to make sure users complete the example rating
  * before proceeding to the real rating and adds the songs to be played to the user's session.
- * @author Shaan
+ * @author Shaan.
  */
 @WebServlet(name = "LoadController", urlPatterns = {"/LoadController"})
 public class LoadController extends HttpServlet{
 	
 	/**
 	 * doGet is called every time a user is redirected to the LoadController.
-	 * @param request 
+	 * @param request
 	 * @param response
 	 * @throws ServletException
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		String nextLocation = "main.jsp";
+		String nextLocation = "WEB-INF/main.jsp";
 		HttpSession sess = request.getSession(true);
 		String[] songs;
 		try {
@@ -32,6 +32,7 @@ public class LoadController extends HttpServlet{
 			if(extractor == null){
 				extractor = new InfoExtractor(request.getRemoteAddr());
 			}
+			
 			Database db = new Database();
 			if(db.hasCompletedExample(request.getRemoteAddr())){
 				songs = extractor.getSong();
@@ -40,42 +41,44 @@ public class LoadController extends HttpServlet{
 				songs = extractor.getDemoSong();
 				String rating = songs[2];
 				sess.setAttribute("rating",rating);
-				nextLocation = "example.jsp";
+				nextLocation = "WEB-INF/example.jsp";
 			}
 			String songOne = songs[0];
 			String songTwo = songs[1];
-			if(songOne == null && songTwo == null){
-				nextLocation = "finished.jsp";
+			if(db.hasFinishedRating(request.getRemoteAddr())){
+				nextLocation = "WEB-INF/finished.jsp";
+			}
+			else if(songOne == null || songTwo == null || songOne.equals("") || songTwo.equals("")){
+				System.out.println("Invalidating session for ip: "+request.getRemoteAddr());
+				sess.invalidate();
+				nextLocation = "WEB-INF/index.jsp";
+				response.sendRedirect(nextLocation);
 			}
 			else{
 				setAttributes(songOne, songTwo, extractor, request, sess);
+				request.getRequestDispatcher(nextLocation).forward(request, response);
 			}
 		} catch (Exception ex) {
 			Logger.getLogger(LoadController.class.getName()).log(Level.SEVERE, null, ex);
+			response.sendRedirect(nextLocation);
 		}
-		request.getRequestDispatcher(nextLocation).forward(request, response);
+		
 	}
 	
 	/**
-	 * Sets the attributes for the current session
-	 * @param songOne First song to be played
-	 * @param songTwo Second song to be played
-	 * @param extractor The InfoExtractor for this session
-	 * @param request The HttpServlet
-	 * @param sess  The current session
+	 * Sets the attributes for the current session.
+	 * @param songOne First song to be played.
+	 * @param songTwo Second song to be played.
+	 * @param extractor The InfoExtractor for this session.
+	 * @param request The HttpServlet.
+	 * @param sess  The current session.
 	 */
 	private void setAttributes(String songOne, String songTwo, InfoExtractor extractor, HttpServletRequest request, HttpSession sess){
 		sess.setAttribute("songOne", songOne);
 		sess.setAttribute("songTwo", songTwo);
 		System.out.println(request.getHeader("user-agent"));
-		if(request.getHeader("user-agent").contains("Firefox")){
-			sess.setAttribute("songOneUrl", extractor.getUrlFirefox(songOne));
-			sess.setAttribute("songTwoUrl", extractor.getUrlFirefox(songTwo));
-		}
-		else{
-			sess.setAttribute("songOneUrl", extractor.getUrl(songOne));
-			sess.setAttribute("songTwoUrl", extractor.getUrl(songTwo));
-		}
+		sess.setAttribute("songOneUrl", extractor.getUrl(songOne));
+		sess.setAttribute("songTwoUrl", extractor.getUrl(songTwo));
 		sess.setAttribute("extractor", extractor);
 	}
 }
