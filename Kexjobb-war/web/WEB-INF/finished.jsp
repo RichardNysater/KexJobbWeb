@@ -15,7 +15,7 @@
 	</head>
 	<body>
 		<h1 id="main">Thank you for your help!</h1>
-		<h2 id="firefox">You have rated every single pair, we are incredibly grateful, have this picture of a kitten as an expression of our gratitude!</h1>
+		<h2 id="firefox">You have rated every single pair and for that we are incredibly grateful. Have this picture of a kitten as a small token of our gratitude!</h1>
 		<img src="img/thankyou.jpg" style="display: block;   margin-left: auto;   margin-right: auto;">
 	</body>
 </html>

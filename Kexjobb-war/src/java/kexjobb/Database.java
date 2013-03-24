@@ -182,7 +182,7 @@ public class Database {
 			ResultSet rs = pst.executeQuery();
 			
 			rs.last();
-			if(rs.getRow() == 45){
+			if(rs.getRow() >= 45){
 				finishedRating = true;
 			}
 			pst.close();

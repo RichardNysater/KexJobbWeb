@@ -38,16 +38,18 @@ public class Submitted extends HttpServlet {
 				String rating = request.getParameter("rating");
 				String songOne = (String)sess.getAttribute("songOne");
 				String songTwo = (String)sess.getAttribute("songTwo");
-				if((id != null && rating != null && songOne != null && songTwo != null) && !(id.equals("") || rating.equals("") || songOne.equals("") || songTwo.equals(""))){
+				String removeSong = (String)sess.getAttribute("removeSong");
+				if((removeSong != null && id != null && rating != null && songOne != null && songTwo != null) && !(id.equals("") || rating.equals("") || songOne.equals("") || removeSong.equals("") || songTwo.equals(""))){
 					db.addRating(id, songOne, songTwo, rating,request.getRemoteAddr(),request.getParameter("action"));
+					InfoExtractor extractor = (InfoExtractor)sess.getAttribute("extractor");
+					extractor.removeSong(Integer.parseInt(removeSong));
+//					sess.setAttribute("InfoExtractor", extractor);
 				}
 			} catch (Exception ex) {
 				Logger.getLogger(LoadController.class.getName()).log(Level.SEVERE, null, ex);
 			}
-			request.getRequestDispatcher("LoadController").forward(request, response);
 		}
-		else{
-			request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
-		}
+			response.sendRedirect("LoadController");
+//			request.getRequestDispatcher("LoadController").forward(request, response);
 	}
 }

@@ -1,6 +1,7 @@
 package kexjobb;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -14,7 +15,7 @@ public class InfoExtractor {
 	/**
 	 * Instantiates an array with the songids of all the songs as well as generates an arraylist of song pairs.
 	 * @param ip The user's ip
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	InfoExtractor(String ip) throws Exception{
 		int[] allsongs = new int[10];
@@ -32,7 +33,6 @@ public class InfoExtractor {
 		Database db = new Database();
 		ArrayList<int[]> voted = db.getVoted(ip);
 		songs = new ArrayList<>();
-		
 		if(voted != null){
 			for(int i = 0; i<allsongs.length;i++){
 				for(int j = i; j<allsongs.length;j++){
@@ -40,7 +40,7 @@ public class InfoExtractor {
 						int[] k = new int[2];
 						k[0] = allsongs[i];
 						k[1] = allsongs[j];
-						if(!voted.contains(k)){
+						if(!isInList(voted,k)){
 							songs.add(k);
 						}
 					}
@@ -51,6 +51,7 @@ public class InfoExtractor {
 			for(int i = 0; i<allsongs.length;i++){
 				for(int j = i; j<allsongs.length;j++){
 					if(j != i){
+						System.out.println("this shouldn't happen");
 						int[] k = new int[2];
 						k[0] = allsongs[i];
 						k[1] = allsongs[j];
@@ -59,6 +60,23 @@ public class InfoExtractor {
 				}
 			}
 		}
+	}
+	
+	/**
+	 *	Help method to check if an int-array is part of an arraylist
+	 * @param list The Arraylist to search in
+	 * @param candidate The int-array to search for
+	 * @return True if the int-array exists in the arraylist, False if it doesn't
+	 */
+	private static boolean isInList(
+			final ArrayList<int[]> list, final int[] candidate){
+		
+		for(final int[] item : list){
+			if(Arrays.equals(item, candidate)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -73,7 +91,7 @@ public class InfoExtractor {
 	}
 	
 	/**
-	 * Returns a URL with the song in the .ogg format. This is used for Firefox since it can't play .mp3. 
+	 * Returns a URL with the song in the .ogg format. This is used for Firefox since it can't play .mp3.
 	 * @param songId The id used to fetch the song.
 	 * @return The relative URL to a playable .ogg.
 	 */
@@ -82,35 +100,40 @@ public class InfoExtractor {
 	}
 	
 	/**
-	 * Randoms a pair of songs to play next.
+	 * Randoms a pair of songs to play next and the amount of songs left to rate.
 	 * @return An array of two strings representing a pair of songs.
 	 */
 	public String[] getSong(){
 		String songOne = "";
 		String songTwo = "";
+		int randomSong = 0;
 		if(songs.size() > 0){
 			Random rand = new Random();
-			int randomSong = rand.nextInt(songs.size());
+			randomSong = rand.nextInt(songs.size());
 			songOne = ""+songs.get(randomSong)[0];
 			songTwo = ""+songs.get(randomSong)[1];
-			songs.remove(randomSong);
 		}
-		String[] ret = new String[2];
+		String[] ret = new String[4];
 		ret[0] = songOne;
 		ret[1] = songTwo;
+		ret[2] = ""+(45-songs.size()-1);
+		ret[3] = ""+randomSong;
 		return ret;
 	}
 	
+	public void removeSong(int number){
+		songs.remove(number);
+	}
 	/**
-	 * Returns one out of four example pairs of songs and the approximate rating for it. 
+	 * Returns one out of four example pairs of songs and the approximate rating for it.
 	 * @return An array of two strings representing a pair of songs.
 	 */
 	public String[] getDemoSong(){
 		String[] ret = new String[3];
 		if(demo == 0){
-			ret[0] = "7161792"; //30 Seconds To March - Kings And Queens
-			ret[1] = "721629"; //The Killers - When We Were Young
-			ret[2] = "between 60 and 80";
+			ret[0] = "177596"; //Tracy Chapman - Talkin' Bout A Revolution
+			ret[1] = "2894679"; //Tom Petty - I Won't Back Down
+			ret[2] = "between 40 and 60";
 		}
 		else if(demo == 1){
 			ret[0] = "4044466"; //36-Crazyfists - Sad Lisa
@@ -123,8 +146,8 @@ public class InfoExtractor {
 			ret[2] = "below 15";
 		}
 		else if(demo == 3){
-			ret[0] = "177596"; //Tracy Chapman - Talkin' Bout A Revolution
-			ret[1] = "2894679"; //Tom Petty - I Won't Back Down
+			ret[0] = "7161792"; //30 Seconds To March - Kings And Queens
+			ret[1] = "721629"; //The Killers - When We Were Young
 			ret[2] = "between 40 and 60";
 		}
 		demo++;

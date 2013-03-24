@@ -93,6 +93,7 @@
 	<body onLoad='setTimeout("showIt()", 4000);'>
 		<h1 id="main">Compare the songs</h1>
 		<h2 id="firefox">Please report any issues!</h2>
+		<c:if test="${not empty sessionScope.completedSongs}"><h2 class="example">You have rated <%= session.getAttribute("completedSongs") %> out of 45 pairs!</h2></c:if>
 		<div id ="maincont">
 			<div class="wrapper">
 				<p id="volume">Volume: <a href="#" id="vol-0">0%</a> | <a href="#" id="vol-10">10%</a> | <a href="#" id="vol-20">20%</a> | <a href="#" id="vol-30">30%</a> | <a href="#" id="vol-40">40%</a> | <a href="#" id="vol-50">50%</a> | <a href="#" id="vol-60">60%</a> | <a href="#" id="vol-70">70%</a> | <a href="#" id="vol-80">80%</a> | <a href="#" id="vol-90">90%</a> | <a href="#" id="vol-100">100%</a></p>

@@ -47,14 +47,19 @@ public class LoadController extends HttpServlet{
 			String songTwo = songs[1];
 			if(db.hasFinishedRating(request.getRemoteAddr())){
 				nextLocation = "WEB-INF/finished.jsp";
+				request.getRequestDispatcher(nextLocation).forward(request, response);
 			}
 			else if(songOne == null || songTwo == null || songOne.equals("") || songTwo.equals("")){
 				System.out.println("Invalidating session for ip: "+request.getRemoteAddr());
 				sess.invalidate();
 				nextLocation = "WEB-INF/index.jsp";
-				response.sendRedirect(nextLocation);
+				request.getRequestDispatcher(nextLocation).forward(request, response);
 			}
 			else{
+				String completedSongs = songs[2];
+				sess.setAttribute("completedSongs",completedSongs);
+				String removeSong = songs[3];
+				sess.setAttribute("removeSong",removeSong);
 				setAttributes(songOne, songTwo, extractor, request, sess);
 				request.getRequestDispatcher(nextLocation).forward(request, response);
 			}
