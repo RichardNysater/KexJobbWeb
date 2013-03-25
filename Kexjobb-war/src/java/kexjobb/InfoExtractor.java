@@ -116,7 +116,7 @@ public class InfoExtractor {
 		String[] ret = new String[4];
 		ret[0] = songOne;
 		ret[1] = songTwo;
-		ret[2] = ""+(45-songs.size()-1);
+		ret[2] = ""+(45-songs.size());
 		ret[3] = ""+randomSong;
 		return ret;
 	}

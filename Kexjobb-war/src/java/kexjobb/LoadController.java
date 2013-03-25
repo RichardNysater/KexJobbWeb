@@ -65,7 +65,10 @@ public class LoadController extends HttpServlet{
 			}
 		} catch (Exception ex) {
 			Logger.getLogger(LoadController.class.getName()).log(Level.SEVERE, null, ex);
-			response.sendRedirect(nextLocation);
+			System.out.println("Invalidating session for ip: "+request.getRemoteAddr());
+			sess.invalidate();
+			nextLocation = "WEB-INF/index.jsp";
+			request.getRequestDispatcher(nextLocation).forward(request, response);
 		}
 		
 	}
