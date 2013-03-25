@@ -36,6 +36,10 @@ public class LoadController extends HttpServlet{
 			Database db = new Database();
 			if(db.hasCompletedExample(request.getRemoteAddr())){
 				songs = extractor.getSong();
+				String completedSongs = songs[2];
+				sess.setAttribute("completedSongs",completedSongs);
+				String removeSong = songs[3];
+				sess.setAttribute("removeSong",removeSong);
 			}
 			else{
 				songs = extractor.getDemoSong();
@@ -56,10 +60,6 @@ public class LoadController extends HttpServlet{
 				request.getRequestDispatcher(nextLocation).forward(request, response);
 			}
 			else{
-				String completedSongs = songs[2];
-				sess.setAttribute("completedSongs",completedSongs);
-				String removeSong = songs[3];
-				sess.setAttribute("removeSong",removeSong);
 				setAttributes(songOne, songTwo, extractor, request, sess);
 				request.getRequestDispatcher(nextLocation).forward(request, response);
 			}

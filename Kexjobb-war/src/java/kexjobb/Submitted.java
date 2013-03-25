@@ -41,8 +41,10 @@ public class Submitted extends HttpServlet {
 				String removeSong = (String)sess.getAttribute("removeSong");
 				if((removeSong != null && id != null && rating != null && songOne != null && songTwo != null) && !(id.equals("") || rating.equals("") || songOne.equals("") || removeSong.equals("") || songTwo.equals(""))){
 					db.addRating(id, songOne, songTwo, rating,request.getRemoteAddr(),request.getParameter("action"));
-					InfoExtractor extractor = (InfoExtractor)sess.getAttribute("extractor");
-					extractor.removeSong(Integer.parseInt(removeSong));
+					if(request.getParameter("action").equals("rate")){
+						InfoExtractor extractor = (InfoExtractor)sess.getAttribute("extractor");
+						extractor.removeSong(Integer.parseInt(removeSong));
+					}
 //					sess.setAttribute("InfoExtractor", extractor);
 				}
 			} catch (Exception ex) {
