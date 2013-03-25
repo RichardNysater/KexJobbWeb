@@ -28,11 +28,6 @@ public class Database {
 	public Database() {
 		try {
 			File file = new File("Databasedetails");
-			try {
-				System.out.println(file.getCanonicalPath());
-			} catch (IOException ex) {
-				Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-			}
 			Scanner scan = new Scanner(file);
 			url = scan.nextLine();
 			user = scan.nextLine();

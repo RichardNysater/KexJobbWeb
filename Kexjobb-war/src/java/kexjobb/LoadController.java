@@ -81,7 +81,7 @@ public class LoadController extends HttpServlet{
 	private void setAttributes(String songOne, String songTwo, InfoExtractor extractor, HttpServletRequest request, HttpSession sess){
 		sess.setAttribute("songOne", songOne);
 		sess.setAttribute("songTwo", songTwo);
-		System.out.println(request.getHeader("user-agent"));
+		System.out.println(request.getHeader("user-agent") + " - "+request.getRemoteAddr());
 		sess.setAttribute("songOneUrl", extractor.getUrl(songOne));
 		sess.setAttribute("songTwoUrl", extractor.getUrl(songTwo));
 		sess.setAttribute("extractor", extractor);

@@ -3,6 +3,7 @@ body { color: #666; font-family: sans-serif; line-height: 1.4; background: #f3f3
 h1 em { font-style: normal; color: #999; }
 a { color: #888; text-decoration: none; }
 .wrapper { width: 500px; margin: 40px auto;}
+.introwrapper { width: 500px; margin: 40px auto;}
 #vote { 
 	width: 500px;
 	margin: 40px auto;
@@ -13,7 +14,10 @@ a { color: #888; text-decoration: none; }
 	text-align:center;
 	display:none;
 }
-
+.flag{
+	float:right;
+	padding-right: 2px;
+}
 h1#main {	
 	text-shadow: 0px 1px 1px #4d4d4d;
 	color: #222;
@@ -56,6 +60,10 @@ table{
 }
 #rangeslider{
 	width:50px;
+}
+#startimage{
+	text-align: center;
+	display: block;
 }
 
 

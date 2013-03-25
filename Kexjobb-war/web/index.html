@@ -2,9 +2,34 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta content="width=device-width, initial-scale=0.6" name="viewport">
+		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
 		<title>Music compare</title>
 	</head>
-	<body onLoad="location.href='LoadController';">
-		<h1>&nbsp;</h1>
+	<body>
+		<div class="introwrapper">
+			<a href="indexswe.html" class="flag"><img src="img/sweden.png" alt="In Swedish"></a>
+			<a href="index.html" class="flag"><img src="img/america.png" alt="In Swedish"></a>
+			<h1>Music comparison</h1>
+			<div>
+				<h2 class='example'>What's the purpose of this page?</h2>
+				<p>We are two computer science undergraduates currently researching Music Information Retrieval.</p>
+				<p>The purpose is to investigate if we can automatically predict how similar two songs are by using machine learning algorithms.</p>
+				<p>To train these algorithms we need data from users on how similar some song pairs are, and that is how you can help!</p>
+			</div>
+			
+			<div>
+				<h2 class='example'>How does it work?</h2>
+				<p>By listening to samples of two songs and then rating how similar you find them, you provide us with the data we need.</p>
+				<p>As a warmup, you will be presented with three example pairs. After rating a pair you will be shown a suitable rating for that pair.</p>
+				<p>When you have completed the examples, you will be eligible to rate the main set of song pairs.</p>
+				<p>In total, there are 10 songs and 45 pairs of songs to rate. You will never be asked to rate the same <b>pair</b> of songs more than once.</p>
+			</div>
+			
+			<div>
+				<p>Every song pair you rate will help us immensely, so thanks in advance!</p>
+				<a href="LoadController" id="startimage"><img src="img/rate.gif" alt="Start rating"></a>
+			</div>
+		</div>
 	</body>
 </html>
