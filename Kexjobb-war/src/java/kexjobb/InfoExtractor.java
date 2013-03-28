@@ -51,7 +51,6 @@ public class InfoExtractor {
 			for(int i = 0; i<allsongs.length;i++){
 				for(int j = i; j<allsongs.length;j++){
 					if(j != i){
-						System.out.println("this shouldn't happen");
 						int[] k = new int[2];
 						k[0] = allsongs[i];
 						k[1] = allsongs[j];

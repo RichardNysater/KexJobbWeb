@@ -53,6 +53,9 @@ public class Submitted extends HttpServlet {
 				}
 			} catch (Exception ex) {
 				Logger.getLogger(LoadController.class.getName()).log(Level.SEVERE, null, ex);
+				System.out.println("Invalidating session for ip: "+request.getRemoteAddr());
+				sess.invalidate();
+				response.sendRedirect("LoadController");
 			}
 		}
 		response.sendRedirect("LoadController");

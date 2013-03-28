@@ -50,6 +50,7 @@ public class LoadController extends HttpServlet{
 			String songOne = songs[0];
 			String songTwo = songs[1];
 			if(db.hasFinishedRating(request.getRemoteAddr())){
+				System.out.println("Ip: "+request.getRemoteAddr()+" has finished rating! Woo");
 				nextLocation = "WEB-INF/finished.jsp";
 				request.getRequestDispatcher(nextLocation).forward(request, response);
 			}
