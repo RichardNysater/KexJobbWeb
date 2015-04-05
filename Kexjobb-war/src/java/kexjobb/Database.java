@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 /**
  * Handles queries to the mysql database.
  * Url to the database, user and password to database are stored separately a file called Databasedetails.
- * @author Shaan.
  */
 public class Database {
 	String url = "";
