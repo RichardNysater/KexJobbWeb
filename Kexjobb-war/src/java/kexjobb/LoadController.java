@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 /**
  * The main controller for the website. Communicates with the InfoExtractor and Database to make sure users complete the example rating
  * before proceeding to the real rating and adds the songs to be played to the user's session.
- * @author Shaan.
  */
 @WebServlet(name = "LoadController", urlPatterns = {"/LoadController"})
 public class LoadController extends HttpServlet{
