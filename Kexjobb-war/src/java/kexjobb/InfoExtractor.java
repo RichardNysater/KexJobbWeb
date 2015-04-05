@@ -6,7 +6,6 @@ import java.util.Random;
 
 /**
  * Contains the id of the songs used.
- * @author Shaan.
  */
 public class InfoExtractor {
 	ArrayList<int[]> songs;
